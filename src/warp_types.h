@@ -18,7 +18,13 @@ typedef struct {
     int scale;
 } windowSize_t;
 
-static_assert(sizeof(color_t) == sizeof(Uint32), "Size mismatch: Warp::color_t and Uint32");
+typedef struct {
+    int width;
+    int height;
+    int frameCount;
+} textureSize_t;
+
+static_assert(sizeof(color_t) == sizeof(Uint32), "[compile time] Size mismatch: Warp::color_t and Uint32");
 
 union color_u {
     color_t colorT;

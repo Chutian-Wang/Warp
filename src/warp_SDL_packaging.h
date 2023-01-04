@@ -14,7 +14,7 @@ inline int SDL_GetRenderDrawColor(SDL_Renderer* renderer, color_t& c) {
     return SDL_GetRenderDrawColor(renderer, &c.red, &c.green, &c.blue, &c.alpha);
 }
 
-inline int UpscaledDrawPoint(SDL_Renderer* renderer, int x, int y, color_t c, int scale = 1) {
+inline int UpscaledDrawPoint(SDL_Renderer* renderer, int x, int y, color_t c, int scale) {
     SDL_SetRenderDrawColor(renderer, c);
     SDL_Rect rect = {x * scale, y * scale, scale, scale};
     return SDL_RenderFillRect(renderer, &rect);
