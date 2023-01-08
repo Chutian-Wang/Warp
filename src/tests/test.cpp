@@ -10,13 +10,14 @@
 void drawTile(SDL_Renderer* renderer, int x = 0, int y = 0){
     color_t c;
     SDL_GetRenderDrawColor(renderer, c);
-    SDL_Rect rect = {x * PIXEL_UPSCALE, y * PIXEL_UPSCALE, 128 * PIXEL_UPSCALE, 128 * PIXEL_UPSCALE};
+    SDL_Rect rect = {x , y, 128, 128};
     SDL_SetRenderDrawColor(renderer, BLACK);
     SDL_RenderDrawRect(renderer, &rect);
     for (int _y = y; _y < y + 128; _y++) {
         for (int _x = x; _x < x + 128; _x++) {
             uint8_t a = (255 * ((_x/2 + _y/2) % 2));
-            UpscaledDrawPoint(renderer, _x, _y, {a, a, a, 255}, PIXEL_UPSCALE);
+            SDL_SetRenderDrawColor(renderer,  {a, a, a, 255});
+            SDL_RenderDrawPoint(renderer, _x, _y);
         }
     }
     SDL_SetRenderDrawColor(renderer, c);
@@ -28,11 +29,12 @@ void drawColorBar(SDL_Renderer* renderer, color_t c, int x, int y){
     for (int i = 0; i < 128; i++) {
         for (int height = 0; height < 8; height++) {
             c.alpha = i;
-            UpscaledDrawPoint(renderer, x+i, y+height, c, PIXEL_UPSCALE);
+            SDL_SetRenderDrawColor(renderer, c);
+            SDL_RenderDrawPoint(renderer, x+i, y+height);
         }
     }
     SDL_SetRenderDrawColor(renderer, BLACK);
-    SDL_Rect rect = {x * PIXEL_UPSCALE, y * PIXEL_UPSCALE, 128 * PIXEL_UPSCALE, 8 * PIXEL_UPSCALE};
+    SDL_Rect rect = {x, y, 128, 8};
     SDL_RenderDrawRect(renderer, &rect);
     SDL_SetRenderDrawColor(renderer, lastColor);
 }
@@ -50,6 +52,8 @@ int main(int argc, char *argv[]) {
 
     bool quit = 0;
     SDL_Event event;
+
+    SDL_RenderSetLogicalSize(renderer, SCREEN_X, SCREEN_Y);
 
     SDL_SetRenderDrawColor(renderer, WHITE);
     SDL_RenderClear(renderer);

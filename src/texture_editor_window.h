@@ -4,7 +4,6 @@ static_assert(false, "[compile time] Redefinition of WINDOW_PROPERTIES.")
 
 #define WINDOW_PROPERTIES
 
-// Same as DOOM 1993 window size.
 #define SCREEN_X 320
 #define SCREEN_Y 200
 #define PIXEL_UPSCALE 3
